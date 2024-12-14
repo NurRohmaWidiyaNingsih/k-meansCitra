@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Segmentation with K-Means</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe4e1; /* Soft pink background */
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff69b4; /* Vibrant pink */
+            margin-top: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        /* Form Container */
+        .form-container {
+            width: 60%;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="file"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #ff69b4; /* Vibrant pink */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #ff85c2; /* Slightly lighter pink */
+            transform: scale(1.05);
+        }
+
+        /* Image Container */
+        .image-container {
+            width: 80%;
+            margin: 30px auto;
+            text-align: center;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        img {
+            max-width: 90%;
+            height: auto;
+            margin: 20px 0;
+            border: 3px solid #ff69b4; /* Pink border */
+            border-radius: 10px;
+        }
+
+        img.original {
+            max-width: 60%; /* Adjusted size for original image */
+        }
+
+        img.segmented {
+            max-width: 70%; /* Slightly larger size for segmented image */
+        }
+
+        h2 {
+            color: #ff69b4; /* Vibrant pink */
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container, .image-container {
+                width: 90%;
+            }
+
+            img.original, img.segmented {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Segmentation with K-Means</h1>
+    <p>Upload an image and input the number of clusters for segmentation, then press the 'Cluster Image' button.</p>
+    
+    <!-- Form Section -->
+    <div class="form-container">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="file">Choose an image file:</label>
+            <input type="file" name="file" id="file" accept="image/*" required>
+
+            <label for="n_clusters">Enter the number of clusters:</label>
+            <input type="text" name="n_clusters" id="n_clusters" value="3" required>
+
+            <button type="submit">Cluster Image</button>
+        </form>
+    </div>
+
+    <!-- Image Display Section -->
+    {% if original_image %}
+        <div class="image-container">
+            <h2>Original Image</h2>
+            <img class="original" src="{{ url_for('static', filename='uploads/' + original_image) }}" alt="Original Image">
+
+            <h2>Segmented Image</h2>
+            <img class="segmented" src="{{ segmented_image_url }}" alt="Segmented Image">
+        </div>
+    {% endif %}
+</body>
+</html>
